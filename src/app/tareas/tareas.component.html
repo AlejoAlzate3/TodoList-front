@@ -1,0 +1,59 @@
+<div class="container w-75 bg-white mt-5 rounded shadow">
+    <div class="row align-items-stretch">
+        <div class="col-xl-6 table-responsive my-4 px-3">
+            <h3>Mis tareas</h3>
+            <table class="table table-hover mt-4">
+                <thead class="table-light text-center">
+                    <tr>
+                        <th>NOMBRE</th>
+                        <th>COMPLETADO</th>
+                        <th>ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tarea of tareas">
+                        <td>{{tarea.nombre}}</td>
+                        <td>
+                            <span *ngIf="tarea.completado; else tareaIncompleta">Si</span>
+                            <ng-template #tareaIncompleta>No</ng-template>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-sm d-flex align-items-center justify-content-center">
+                                <button class="btn btn-primary" (click)="update(tarea)">
+                                    Actualizar
+                                </button>
+                                <button class="btn btn-danger" (click)="delete(tarea)">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-xl-6 my-4 px-3">
+            <h3>{{ tareaEnEdicion ? 'Editar' : 'Nueva' }} Tarea</h3>
+            <form class="mt-4" [formGroup]="formulario" (ngSubmit)="save()" autocomplete="off">
+                <div class="mb-2">
+                    <label for="nombre" class="form-label fw-bold">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre de la tarea" formControlName="nombre">
+                </div>
+
+                <div class="mb-2 form-check">
+                    <label>
+                        <input type="checkbox" class="form-check-input" formControlName="completado">
+                        Completado
+                    </label>
+                </div>
+
+                <div class="text-end">
+                    <button class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
